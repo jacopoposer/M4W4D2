@@ -1,11 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="./bootstrap.min.css">
 </head>
+
 <body>
-    
+    <div class="container">
+        <form action="">
+            <div class="row py-4 gy-2">
+
+                <div class="col-12 col-sm-6">
+                    <input type="text" class="form-control" placeholder="Name" aria-label="Name" id="name">
+                </div>
+                <div class="col-12 col-sm-6">
+                    <input type="text" class="form-control" placeholder="Brand" aria-label="Brand" id="brand">
+                </div>
+                <div class="col-12 col-sm-6">
+                    <input type="text" class="form-control" placeholder="Price" aria-label="Price" id="price">
+                </div>
+                <div class="col-12 col-sm-6">
+                    <input type="text" class="form-control" placeholder="ImageURL" aria-label="ImageURL" id="imageUrl">
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Description" aria-label="Description"
+                        id="description">
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary" id="btnSubmit">Sign in</button>
+                </div>
+
+            </div>
+        </form>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th> Name</th>
+                    <th> Brand</th>
+                    <th> Price</th>
+                    <th> Image</th>
+                </tr>
+            </thead>
+            <tbody id="productRow">
+
+            </tbody>
+        </table>
+    </div>
+
+    <script src="./backoffice.js"></script>
 </body>
+
 </html>
