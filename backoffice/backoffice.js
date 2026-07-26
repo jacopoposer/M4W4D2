@@ -5,6 +5,7 @@ const price = document.getElementById('price')
 const imageUrl = document.getElementById('imageUrl')
 const description = document.getElementById('description')
 const btnSubmit = document.getElementById('btnSubmit')
+
 const editName = document.getElementById('editName')
 const editPrice = document.getElementById('editPrice')
 const editBrand = document.getElementById('editBrand')
@@ -12,6 +13,12 @@ const editDescription = document.getElementById('editDescription')
 const editImageUrl = document.getElementById('editImageUrl')
 const editBtn = document.getElementById('editBtn')
 const tokenApi = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTYyNGVhNTIxMDU5ZjAwMTVlMjNhMGMiLCJpYXQiOjE3ODQ4Mjc1NTcsImV4cCI6MTc4NjAzNzE1N30.7o1jv0id6KCTb4jdpYio8IzxLatrN4Pi6qho-_Dr_9A'
+
+let currentProductId = null;
+
+
+
+
 
 //fetch all'API per ottenere i prodotti dal server
 const getProducts = async () => {
@@ -21,15 +28,17 @@ const getProducts = async () => {
                 Authorization: `Bearer ${tokenApi}`
             }
         })
+         
+        console.log("status:", result.status)
         const data = await result.json()
+        console.log(data)
         showTable(data)
     } catch (e) {
         console.error(e)
     }
 }
 
-// evoco la funzione
-getProducts()
+
 
 //creo la struttura del singolo elemento
 const createProductRow = ({ name, brand, price, imageUrl, description, _id }) => {
@@ -56,24 +65,22 @@ const createProductRow = ({ name, brand, price, imageUrl, description, _id }) =>
     openEditModalBtn.setAttribute('data-bs-toggle', 'modal')
     openEditModalBtn.setAttribute('data-bs-target', '#editform')
 
-
+    //al click elimina il prodotto
     deleteBtn.addEventListener('click', () => {
         deleteProduct(_id)
     })
 
-    openEditModalBtn.addEventListener('click', () => {
-        populateEditProductForm(_id)
+    //al click mostra il modale dell'elemento selezionato
+    openEditModalBtn.addEventListener('click', async () => {
+        currentProductId = _id;
+        await populateEditProductForm(_id);
     })
-
-    editBtn.addEventListener('click', (e)=>{
-        e.preventDefault()
-        editProduct(_id,generateEditProductPayload())
-    })
-
 
     tr.append(tdName, tdBrand, tdPrice, tdImage, tdDescription, deleteBtn, openEditModalBtn)
     return tr
 }
+
+
 
 // aggiungo il prodotto
 const showTable = (products) => {
@@ -88,12 +95,15 @@ const showTable = (products) => {
 btnSubmit.addEventListener('click', (e) => {
     e.preventDefault()
     const payload = {
-        name: name.value,
-        brand: brand.value,
-        price: price.value,
-        imageUrl: imageUrl.value,
-        description: description.value
+        name: name.value.trim(),
+        brand: brand.value.trim(),
+        price: price.value.trim(),
+        imageUrl: imageUrl.value.trim(),
+        description: description.value.trim()
     }
+
+    if (!validateProduct(payload)) return;
+
     addProduct(payload)
         .then(res => console.log(res))
 })
@@ -105,7 +115,7 @@ const addProduct = async (product) => {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${tokenApi}`,
-                'content-Type': 'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(product)
         })
@@ -172,26 +182,75 @@ const editProduct = async (id, payload) => {
                 method: 'PUT',
                 headers: {
                     Authorization: `Bearer ${tokenApi}`,
-                    'content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(payload)
             }
-        ) 
-        return await response.json()
+        )
+
+        //chiusura modale 
+        const modalElement = document.getElementById('editform')
+        const modal = bootstrap.Modal.getInstance(modalElement)
+
+        if (modal) {
+            modal.hide()
+        } 
+
+
+        const data = await response.json()
+
+
+        return data
+
     } catch (e) {
         console.error(e)
-    } finally{
+    } finally {
         getProducts()
     }
 }
 
 const generateEditProductPayload = () => {
-    return  {
-        name: editName.value,
-        price: editPrice.value,
-        imageUrl: editImageUrl.value,
-        brand: editBrand.value,
-        description: editDescription.value
+    return {
+        name: editName.value.trim(),
+        price: editPrice.value.trim(),
+        imageUrl: editImageUrl.value.trim(),
+        brand: editBrand.value.trim(),
+        description: editDescription.value.trim()
     }
 }
 
+//valido i dati del form
+const validateProduct = ({ name, brand, price, imageUrl, description }) => {
+    if (
+        !name ||
+        !brand ||
+        !price ||
+        !imageUrl ||
+        !description
+    ) {
+        alert('Please fill in all fields.');
+        return false;
+    }
+
+    if (isNaN(price) || Number(price) <= 0) {
+        alert('Insert a valid price');
+        return false;
+    }
+
+    return true;
+}
+
+//al click prende l'id selezionato e apporta la modifica
+editBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    const payload = generateEditProductPayload();
+
+    if (!validateProduct(payload)) return;
+
+
+    editProduct(currentProductId, payload);
+})
+
+// evoco la funzione che crea i prodotti
+getProducts()
