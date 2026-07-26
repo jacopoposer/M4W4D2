@@ -16,7 +16,7 @@ const tokenApi = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTYyNGVhNTIxM
 
 const searchInput = document.getElementById('searchInput')
 let currentProductId = null;
-let allProducts= []
+let allProducts = []
 
 
 
@@ -29,7 +29,7 @@ const getProducts = async () => {
                 Authorization: `Bearer ${tokenApi}`
             }
         })
-         
+
         console.log("status:", result.status)
         const data = await result.json()
         allProducts = data
@@ -52,7 +52,8 @@ const createProductRow = ({ name, brand, price, imageUrl, description, _id }) =>
     tdPrice.innerText = price
     const tdImage = document.createElement('td')
     const img = document.createElement('img')
-    img.setAttribute('class', 'img-fluid w-25')
+    img.classList.add('img-fluid','rounded','shadow-sm')
+    img.style.width = "80px"
     img.src = imageUrl
     tdImage.appendChild(img)
     const tdDescription = document.createElement('td')
@@ -195,7 +196,7 @@ const editProduct = async (id, payload) => {
 
         if (modal) {
             modal.hide()
-        } 
+        }
 
 
         const data = await response.json()

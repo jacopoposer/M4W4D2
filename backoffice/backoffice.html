@@ -9,103 +9,122 @@
 </head>
 
 <body>
-    <nav class="navbar bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark mb-4">
         <div class="container">
-            <input id="searchInput" class="form-control" type="search" placeholder="Search products...">
+            <a class="navbar-brand" href="#">
+                Product Admin
+            </a>
+            <input id="searchInput" class="form-control w-50" type="search" placeholder="Search products...">
         </div>
     </nav>
 
-    <!--Main-->
     <div class="container">
-        <form action="">
-            <div class="row py-4 gy-2">
+    <h1 class="my-4">
+        Product Management
+    </h1>
+</div>
 
-                <div class="col-12 col-sm-6">
-                    <input type="text" class="form-control" placeholder="Name" aria-label="Name" id="name">
-                </div>
-                <div class="col-12 col-sm-6">
-                    <input type="text" class="form-control" placeholder="Brand" aria-label="Brand" id="brand">
-                </div>
-                <div class="col-12 col-sm-6">
-                    <input type="text" class="form-control" placeholder="Price" aria-label="Price" id="price">
-                </div>
-                <div class="col-12 col-sm-6">
-                    <input type="text" class="form-control" placeholder="ImageURL" aria-label="ImageURL" id="imageUrl">
-                </div>
-                <div class="col">
-                    <input type="text" class="form-control" placeholder="Description" aria-label="Description"
-                        id="description">
-                </div>
-                <div class="col-12">
-                    <button type="submit" class="btn btn-primary" id="btnSubmit">Sign in</button>
-                </div>
-            </div>
-        </form>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th> Name</th>
-                    <th> Brand</th>
-                    <th> Price</th>
-                    <th> Image</th>
-                </tr>
-            </thead>
-            <tbody id="productRow"> </tbody>
-        </table>
+    <!--Main-->
+    <div class="container py-4">
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
 
+                <h4 class="card-title mb-3">
+                    Add new product
+                </h4>
+                <form action="">
+                    <div class="row py-4 gy-2">
 
-
-        <!-- Modal -->
-        <div class="modal fade" id="editform" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title" id="exampleModalLabel">Edit Product</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="col-12 col-sm-6">
+                            <input type="text" class="form-control" placeholder="Name" aria-label="Name" id="name">
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <input type="text" class="form-control" placeholder="Brand" aria-label="Brand" id="brand">
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <input type="text" class="form-control" placeholder="Price" aria-label="Price" id="price">
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <input type="text" class="form-control" placeholder="ImageURL" aria-label="ImageURL"
+                                id="imageUrl">
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="Description" aria-label="Description"
+                                id="description">
+                        </div>
+                        <button type="submit" class="btn btn-success px-4" id="btnSubmit">
+                            Add Product
+                        </button>
                     </div>
-                    <div class="modal-body">
-                        <form action="">
-                            <div class="row py-4 gy-2">
+                </form>
+                <table class="table table-hover align-middle shadow-sm">
+                    <thead>
+                        <tr>
+                            <th> Name</th>
+                            <th> Brand</th>
+                            <th> Price</th>
+                            <th> Image</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productRow"> </tbody>
+                </table>
 
-                                <div class="col-12 col-sm-6">
-                                    <input type="text" class="form-control" placeholder="Name" aria-label="Name"
-                                        id="editName">
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <input type="text" class="form-control" placeholder="Brand" aria-label="Brand"
-                                        id="editBrand">
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <input type="text" class="form-control" placeholder="Price" aria-label="Price"
-                                        id="editPrice">
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <input type="text" class="form-control" placeholder="ImageURL" aria-label="ImageURL"
-                                        id="editImageUrl">
-                                </div>
-                                <div class="col-12">
-                                    <input type="text" class="form-control" placeholder="Description"
-                                        aria-label="Description" id="editDescription">
-                                </div>
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-primary" id="editBtn">Edit</button>
-                                </div>
+
+
+                <!-- Modal -->
+                <div class="modal fade" id="editform" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title" id="exampleModalLabel">Edit Product</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <div class="modal-body">
+                                <form action="">
+                                    <div class="row py-4 gy-2">
+
+                                        <div class="col-12 col-sm-6">
+                                            <input type="text" class="form-control" placeholder="Name" aria-label="Name"
+                                                id="editName">
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <input type="text" class="form-control" placeholder="Brand"
+                                                aria-label="Brand" id="editBrand">
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <input type="text" class="form-control" placeholder="Price"
+                                                aria-label="Price" id="editPrice">
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <input type="text" class="form-control" placeholder="ImageURL"
+                                                aria-label="ImageURL" id="editImageUrl">
+                                        </div>
+                                        <div class="col-12">
+                                            <input type="text" class="form-control" placeholder="Description"
+                                                aria-label="Description" id="editDescription">
+                                        </div>
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary" id="editBtn">Edit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <script src="./bootstrap.bundle.min.js"></script>
-    <script type="module" src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js"></script>
-    <script src="./backoffice.js"></script>
+            <script src="./bootstrap.bundle.min.js"></script>
+            <script type="module" src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.esm.js"></script>
+            <script nomodule src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js"></script>
+            <script src="./backoffice.js"></script>
 </body>
 
 </html>
