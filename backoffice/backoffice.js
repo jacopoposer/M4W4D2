@@ -12,10 +12,11 @@ const editBrand = document.getElementById('editBrand')
 const editDescription = document.getElementById('editDescription')
 const editImageUrl = document.getElementById('editImageUrl')
 const editBtn = document.getElementById('editBtn')
-const tokenApi = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTYyNGVhNTIxMDU5ZjAwMTVlMjNhMGMiLCJpYXQiOjE3ODQ4Mjc1NTcsImV4cCI6MTc4NjAzNzE1N30.7o1jv0id6KCTb4jdpYio8IzxLatrN4Pi6qho-_Dr_9A'
+const tokenApi = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTYyNGVhNTIxMDU5ZjAwMTVlMjNhMGMiLCJpYXQiOjE3ODUwOTgzMDUsImV4cCI6MTc4NjMwNzkwNX0.07dyj8cYks87chSHybGxrL4dOcbsdxp4qpZ9imWYcPg'
 
+const searchInput = document.getElementById('searchInput')
 let currentProductId = null;
-
+let allProducts= []
 
 
 
@@ -31,8 +32,8 @@ const getProducts = async () => {
          
         console.log("status:", result.status)
         const data = await result.json()
-        console.log(data)
-        showTable(data)
+        allProducts = data
+        showTable(allProducts)
     } catch (e) {
         console.error(e)
     }
@@ -240,6 +241,21 @@ const validateProduct = ({ name, brand, price, imageUrl, description }) => {
     return true;
 }
 
+// funzione per la ricerca
+const searchProducts = () => {
+    const searchValue = searchInput.value.toLowerCase().trim()
+
+    const filteredProducts = allProducts.filter(product => {
+        return (
+            product.name.toLowerCase().includes(searchValue) ||
+            product.brand.toLowerCase().includes(searchValue) ||
+            product.description.toLowerCase().includes(searchValue)
+        )
+    })
+
+    showTable(filteredProducts)
+}
+
 //al click prende l'id selezionato e apporta la modifica
 editBtn.addEventListener('click', (e) => {
     e.preventDefault();
@@ -251,6 +267,10 @@ editBtn.addEventListener('click', (e) => {
 
     editProduct(currentProductId, payload);
 })
+
+// a ogni inserimento avvia la ricerca
+searchInput.addEventListener('input', searchProducts)
+
 
 // evoco la funzione che crea i prodotti
 getProducts()

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item Detail</title>
+    <link rel="stylesheet" href="./bootstrap.min.css">
+</head>
+
+<body>
+    <main class="container py-5">
+        <div class="card shadow">
+            <div class="row g-0">
+                <!-- Immagine -->
+                <div class="col-12 col-md-5 d-flex align-items-center justify-content-center p-4">
+                    <img 
+                        src="" 
+                        alt="" 
+                        class="img-fluid rounded"
+                        id="itemImg"
+                    >
+                </div>
+
+                <!-- Informazioni -->
+                <div class="col-12 col-md-7">
+                    <div class="card-body">
+                        <h1 class="card-title mb-3" id="itemName"></h1>
+                        <h5 class="text-secondary" id="itemBrand"></h5>
+                        <h3 class="text-success my-4" id="itemPrice"></h3>
+                        <p class="card-text" id="itemDescription"></p>
+                        <hr>
+                        <small class="text-muted">
+                            Product ID:
+                            <span id="itemId"></span>
+                        </small>
+                        <div class="mt-4">
+                            <button class="btn btn-secondary" id="addToCartBtn">
+                                Add To Cart
+                            </button>
+                            <button class="btn btn-outline-tertiary" id="backBtn">
+                                Back
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="./bootstrap.bundle.min.js"></script>
+    <script src="./details.js"></script>
+
+</body>
+
+</html>

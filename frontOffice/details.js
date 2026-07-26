@@ -6,8 +6,13 @@ const itemDescription = document.getElementById('itemDescription')
 const itemId = document.getElementById('itemId')
 const itemPrice = document.getElementById('itemPrice')
 const itemImg = document.getElementById('itemImg')
-const tokenApi = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTYyNGVhNTIxMDU5ZjAwMTVlMjNhMGMiLCJpYXQiOjE3ODQ4Mjc1NTcsImV4cCI6MTc4NjAzNzE1N30.7o1jv0id6KCTb4jdpYio8IzxLatrN4Pi6qho-_Dr_9A'
+const tokenApi = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTYyNGVhNTIxMDU5ZjAwMTVlMjNhMGMiLCJpYXQiOjE3ODUwOTgzMDUsImV4cCI6MTc4NjMwNzkwNX0.07dyj8cYks87chSHybGxrL4dOcbsdxp4qpZ9imWYcPg'
+const backBtn = document.getElementById('backBtn')
+const addToCartBtn = document.getElementById('addToCartBtn')
+let currentItem = null
 
+
+//richiesta API e raccolta dati dell'item
 const getItem = async () => {
     
     try {
@@ -17,6 +22,7 @@ const getItem = async () => {
             }
         })
         const data = await response.json()
+        currentItem = data
         itemImg.src = data.imageUrl
         itemName.innerText = data.name
         itemBrand.innerText = data.brand
@@ -27,5 +33,24 @@ const getItem = async () => {
         console.error(e)
     }
 }
+
+//aggiungo al carrello
+const addToCart = (item) => {
+    let cart = JSON.parse(localStorage.getItem('cart')) || []
+    cart.push(item)
+    localStorage.setItem('cart', JSON.stringify(cart))
+}
+
+//riprende la pagina precedente dalla cronologia del browser
+backBtn.addEventListener('click', () => {
+    history.back()
+})
+
+//aggiunge al carrello
+addToCartBtn.addEventListener('click', () => {
+    addToCart(currentItem)
+})
+
+
 
 getItem()
